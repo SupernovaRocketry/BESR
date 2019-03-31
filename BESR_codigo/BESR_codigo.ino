@@ -67,7 +67,7 @@ void loop() {
   
   if(millisAtual - millisAnterior > TAXA_ATUALIZ){
     
-      switch (estado){
+      switch (menu){
         case 'i':
         inicializa();
         break;
@@ -106,31 +106,214 @@ void loop() {
 
 void inicializa(){
 
-  //inicializar o HX711
+  switch(submenu){
+
+    case 'a':
+    lcd.setCursor(0, 0);
+    lcd.print("  Iniciando...  ");
+    
+    break;
+
+    case 'b':
+    lcd.setCursor(0, 0);
+    lcd.print("   Erro no SD   ");
+    
+    break;
+
+    case 'c':
+    lcd.setCursor(0, 0);
+    lcd.print("   Erro no HX   ");
+    
+    break;
+
+  }
 
   //inicializar o Cartão SD
+  if(!SD.begin(PINO_SD_CS))
+  submenu = 'b';
+  else{
 
-  if(HX711 && CARTAOSD)
-  estado = 'c';
+    int n = 1;
+    bool parar = false;
+
+
+    while (!parar)
+    {
+      sprintf(nomeConcat, "BESR%d.txt", n);
+      if (SD.exists(nomeConcat))
+          n++;
+          else
+            parar = true;
+      }
+
+  arquivoLog = SD.open(nomeConcat, FILE_WRITE);
+  }
   
+  //inicializar o HX711
+  if(!tentariniciarHX)
+  submenu = 'c';
+
+  if(HX711 && CARTAOSD){
+  menu = 'c';
+  submenu = 'a';
+  }
 }
 
 void calibra(){
+
+  switch(submenu){
+
+    case 'a':
+    lcd.setCursor(0, 0);
+    lcd.print("Calibrar o banco");
+    lcd.setCursor(1, 0);
+    lcd.print("   [Calibrar]   ");
+
+    if(debounceBotao)
+    submenu = 'b';
+    
+    break;
+
+    case 'b':
+    lcd.setCursor(0, 0);
+    lcd.print("Posicione o peso");
+    lcd.setCursor(1, 0);
+    lcd.print("      [OK]      ");
+
+    if(debounceBotao){
+    submenu = 'c';
+    millisExpira = millisAtual;
+    }
+    break;
+
+    case 'c':
+    lcd.setCursor(0, 0);
+    lcd.print("Valor atual:");
+    lcd.setCursor(1, 0);
+    lcd.print(medir());
+    
+    if(millisAtual - millisExpira > CALIB_MS){
+
+      if(maiorPeso > PESO_ESTIMADO)
+      submenu = 'd';
+      else
+      submenu = 'e';
+        
+    }
+    
+    break;
+
+    case 'd':
+    lcd.setCursor(0, 0);
+    lcd.print("Calib. concluida");
+    lcd.setCursor(1, 0);
+    lcd.print("      [OK]      ");
+
+    if(debounceBotao){
+    submenu = 'a';
+    menu = 'e';
+    }
+    
+    break;
+
+    case 'e':
+    lcd.setCursor(0, 0);
+    lcd.print("Erro! Verif cabo");
+    lcd.setCursor(1, 0);
+    lcd.print("    [Voltar]    ");
+
+    if(debounceBotao)
+    submenu = 'a';
+    
+    break;
+
+  }
+
+  }
   
-}
 
 void espera(){
+
+  lcd.setCursor(0, 0);
+  lcd.print("Pronto p/ medir");
+  lcd.setCursor(1, 0);
+  lcd.print("   [Iniciar]   ");
+
+  if(debounceBotao)
+  menu = 't';
   
 }
 
 void trabalhando(){
+
+  switch(submenu){
+
+    case 'a':
+    medir();
+    escrever();
+    
+    lcd.setCursor(0, 0);
+    lcd.print("A:      M:      ");
+    
+    lcd.setCursor(0, 3);
+    lcd.print(peso/100);
+
+    lcd.setCursor(0, 12);
+    lcd.print(maiorPeso/100);
+    
+    
+    lcd.setCursor(1, 0);
+    lcd.print("   [Terminar]   ");
+    break;
+
+    case 'b':
+    lcd.setCursor(0, 0);
+    lcd.print("Salvo:");
+    lcd.setCursor(0, 7);
+    lcd.print(nomeConcat);
+    lcd.setCursor(1, 0);
+    lcd.print("      [OK]      ");
+    break;
+
+  }
   
 }
 
-int medir(){
+void medir(){
 
-  return peso;
+    peso = lerHX;
+
+    if(peso > maiorPeso)
+    maiorPeso = peso;
+
 }
 
+bool debounceBotao{
+
+  if(DigitalRead(PINO_ENTER))
+    botaoApertado = 1;
+
+  if((botaoApertado == 1) && (millisAtual - millisBotao > DEBOUNCE_MS)){
+    return 1;
+    botaoApertado = 0;
+
+  }
+  else
+  return 0;
 }
+
+void escrever(){
+
+  arquivoLog = SD.open(nomeConcat, FILE_WRITE);
+  
+  stringDados += millisGravacao;
+  stringDados += ",";
+  stringDados += peso;
+  stringDados += ",";
+  stringDados += maiorPeso;
+  arquivoLog.println(stringDados);
+  
+  arquivoLog.close();
+}
+
 
