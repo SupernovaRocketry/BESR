@@ -18,12 +18,20 @@ Toda a parte editável pelo usuário está em //config
 Conexões:
 
  */
-//Config
+
+//Bibliotecas
+#include <LiquidCrystal.h>
+#include <SPI.h>
+#include <SD.h>
+#include "HX711.h"
+
+//Configurações
 TAXA_ATUALIZ 100
 TAXA_TELA 100
 DEBOUNCE_MS 300
 CALIB_MS
 PESO_ESTIMADO
+DELTA_RUIDO
 
 TELA_RS
 TELA_EN
