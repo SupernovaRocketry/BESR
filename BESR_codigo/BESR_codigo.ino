@@ -107,7 +107,7 @@ void loop() {
     
         case 'e':
         espera();
-        break
+        break;
     
         case 't':
         trabalhando();
@@ -124,11 +124,6 @@ void loop() {
   tela.clear();
   millisTela = millisAtual;
   }
-  
-  
-
-  
-
 }
 
 
