@@ -34,11 +34,22 @@ SD_CS
 
 BOTAO_MEIO 
 
+
 //Não mexer
-char  estado = 'e';
+char  menu = 'e';
+char  submenu;
+
 int   peso = 0;
+int   maiorPeso = 0;
+
 int   millisAtual, millisAnterior;
 int   millisTela;
+int   millisBotao;
+int   millisExpira;
+
+File arquivoLog;
+char nomeBase[] = "BESR";
+char nomeConcat[12];
 
 
 void setup() {
