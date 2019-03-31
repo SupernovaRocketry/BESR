@@ -330,9 +330,9 @@ void medir(){
 
 }
 
-bool debounceBotao{
+bool debounceBotao(){
 
-  if(DigitalRead(PINO_ENTER))
+  if(digitalRead(PINO_BOTAO))
     botaoApertado = 1;
 
   if((botaoApertado == 1) && (millisAtual - millisBotao > DEBOUNCE_MS)){
@@ -348,7 +348,7 @@ void escrever(){
 
   arquivoLog = SD.open(nomeConcat, FILE_WRITE);
   
-  stringDados += millisGravacao;
+  stringDados += millisAtual;
   stringDados += ",";
   stringDados += peso;
   stringDados += ",";
