@@ -245,8 +245,10 @@ void espera(){
   lcd.setCursor(1, 0);
   lcd.print("   [Iniciar]   ");
 
-  if(debounceBotao)
-  menu = 't';
+  if(debounceBotao){
+    menu = 't';
+    submenu = 'a';
+  }
   
 }
 
@@ -270,6 +272,10 @@ void trabalhando(){
     
     lcd.setCursor(1, 0);
     lcd.print("   [Terminar]   ");
+
+    if(debounceBotao)
+    submenu = 'b';
+    
     break;
 
     case 'b':
@@ -279,6 +285,10 @@ void trabalhando(){
     lcd.print(nomeConcat);
     lcd.setCursor(1, 0);
     lcd.print("      [OK]      ");
+
+    if(debounceBotao)
+    menu = 'e';
+    
     break;
 
   }
