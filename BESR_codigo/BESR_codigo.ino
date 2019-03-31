@@ -133,20 +133,20 @@ void inicializa(){
   switch(submenu){
 
     case 'a':
-    lcd.setCursor(0, 0);
-    lcd.print("  Iniciando...  ");
+    tela.setCursor(0, 0);
+    tela.print("  Iniciando...  ");
     
     break;
 
     case 'b':
-    lcd.setCursor(0, 0);
-    lcd.print("   Erro no SD   ");
+    tela.setCursor(0, 0);
+    tela.print("   Erro no SD   ");
     
     break;
 
     case 'c':
-    lcd.setCursor(0, 0);
-    lcd.print("   Erro no HX   ");
+    tela.setCursor(0, 0);
+    tela.print("   Erro no HX   ");
     
     break;
 
@@ -174,10 +174,10 @@ void inicializa(){
   }
   
   //inicializar o HX711
-  if(!tentariniciarHX)
+  if(!celulaCarga.wait_ready_timeout(500))
   submenu = 'c';
 
-  if(HX711 && CARTAOSD){
+  if(submenu == 'a'){
   menu = 'c';
   submenu = 'a';
   }
@@ -188,10 +188,10 @@ void calibra(){
   switch(submenu){
 
     case 'a':
-    lcd.setCursor(0, 0);
-    lcd.print("Calibrar o banco");
-    lcd.setCursor(1, 0);
-    lcd.print("   [Calibrar]   ");
+    tela.setCursor(0, 0);
+    tela.print("Calibrar o banco");
+    tela.setCursor(1, 0);
+    tela.print("   [Calibrar]   ");
 
     if(debounceBotao)
     submenu = 'b';
@@ -199,10 +199,10 @@ void calibra(){
     break;
 
     case 'b':
-    lcd.setCursor(0, 0);
-    lcd.print("Posicione o peso");
-    lcd.setCursor(1, 0);
-    lcd.print("      [OK]      ");
+    tela.setCursor(0, 0);
+    tela.print("Posicione o peso");
+    tela.setCursor(1, 0);
+    tela.print("      [OK]      ");
 
     if(debounceBotao){
     submenu = 'c';
@@ -211,10 +211,11 @@ void calibra(){
     break;
 
     case 'c':
-    lcd.setCursor(0, 0);
-    lcd.print("Valor atual:");
-    lcd.setCursor(1, 0);
-    lcd.print(medir());
+    medir();
+    tela.setCursor(0, 0);
+    tela.print("Valor atual:");
+    tela.setCursor(1, 0);
+    tela.print(peso);
     
     if(millisAtual - millisExpira > CALIB_MS){
 
@@ -228,10 +229,10 @@ void calibra(){
     break;
 
     case 'd':
-    lcd.setCursor(0, 0);
-    lcd.print("Calib. concluida");
-    lcd.setCursor(1, 0);
-    lcd.print("      [OK]      ");
+    tela.setCursor(0, 0);
+    tela.print("Calib. concluida");
+    tela.setCursor(1, 0);
+    tela.print("      [OK]      ");
 
     if(debounceBotao){
     submenu = 'a';
@@ -241,10 +242,10 @@ void calibra(){
     break;
 
     case 'e':
-    lcd.setCursor(0, 0);
-    lcd.print("Erro! Verif cabo");
-    lcd.setCursor(1, 0);
-    lcd.print("    [Voltar]    ");
+    tela.setCursor(0, 0);
+    tela.print("Erro! Verif cabo");
+    tela.setCursor(1, 0);
+    tela.print("    [Voltar]    ");
 
     if(debounceBotao)
     submenu = 'a';
@@ -258,10 +259,10 @@ void calibra(){
 
 void espera(){
 
-  lcd.setCursor(0, 0);
-  lcd.print("Pronto p/ medir");
-  lcd.setCursor(1, 0);
-  lcd.print("   [Iniciar]   ");
+  tela.setCursor(0, 0);
+  tela.print("Pronto p/ medir");
+  tela.setCursor(1, 0);
+  tela.print("   [Iniciar]   ");
 
   if(debounceBotao){
     menu = 't';
@@ -278,18 +279,18 @@ void trabalhando(){
     medir();
     escrever();
     
-    lcd.setCursor(0, 0);
-    lcd.print("A:      M:      ");
+    tela.setCursor(0, 0);
+    tela.print("A:      M:      ");
     
-    lcd.setCursor(0, 3);
-    lcd.print(peso/100);
+    tela.setCursor(0, 3);
+    tela.print(peso/100);
 
-    lcd.setCursor(0, 12);
-    lcd.print(maiorPeso/100);
+    tela.setCursor(0, 12);
+    tela.print(maiorPeso/100);
     
     
-    lcd.setCursor(1, 0);
-    lcd.print("   [Terminar]   ");
+    tela.setCursor(1, 0);
+    tela.print("   [Terminar]   ");
 
     if(debounceBotao)
     submenu = 'b';
@@ -297,12 +298,12 @@ void trabalhando(){
     break;
 
     case 'b':
-    lcd.setCursor(0, 0);
-    lcd.print("Salvo:");
-    lcd.setCursor(0, 7);
-    lcd.print(nomeConcat);
-    lcd.setCursor(1, 0);
-    lcd.print("      [OK]      ");
+    tela.setCursor(0, 0);
+    tela.print("Salvo:");
+    tela.setCursor(0, 7);
+    tela.print(nomeConcat);
+    tela.setCursor(1, 0);
+    tela.print("      [OK]      ");
 
     if(debounceBotao)
     menu = 'e';
