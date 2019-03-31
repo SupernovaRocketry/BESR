@@ -316,7 +316,7 @@ void trabalhando(){
 
 void medir(){
 
-    amostraAtual = lerHX;
+    amostraAtual = celulaCarga.get_units(10);
 
     if(abs(amostraAnterior - amostraAtual) > DELTA_RUIDO){
       
