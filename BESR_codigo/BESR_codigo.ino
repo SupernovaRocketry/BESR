@@ -297,10 +297,17 @@ void trabalhando(){
 
 void medir(){
 
-    peso = lerHX;
+    amostraAtual = lerHX;
 
+    if(abs(amostraAnterior - amostraAtual) > DELTA_RUIDO){
+      
+    peso = amostraAtual;
+    
     if(peso > maiorPeso)
     maiorPeso = peso;
+
+    amostraAnterior = amostraAtual;
+    }
 
 }
 
