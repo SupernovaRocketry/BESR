@@ -21,26 +21,26 @@ Conexões:
 #include <LiquidCrystal.h>
 #include <SPI.h>
 #include <SD.h>
-#include "HX711.h"
+#include "HX711.h" 
 
 //Configurações
-TAXA_ATUALIZ 100
-TAXA_TELA 100
-DEBOUNCE_MS 300
-CALIB_MS
-PESO_ESTIMADO
-DELTA_RUIDO
+#define TAXA_ATUALIZ 100
+#define TAXA_TELA 100
+#define DEBOUNCE_MS 300
+#define CALIB_MS 5000
+#define PESO_ESTIMADO 250
+#define DELTA_RUIDO 1500
 
-TELA_RS
-TELA_EN
-TELA_D4
-TELA_D5
-TELA_D6
-TELA_D7
+#define TELA_RS 2
+#define TELA_EN 3
+#define TELA_D4 4
+#define TELA_D5 5
+#define TELA_D6 6
+#define TELA_D7 7
 
-SD_CS
+#define PINO_SD_CS   8 
 
-BOTAO_MEIO 
+#define PINO_BOTAO 9
 
 
 //Variáveis do código, não mexer
@@ -49,20 +49,43 @@ char  submenu;
 
 int   peso = 0;
 int   maiorPeso = 0;
+int   amostraAtual = 0;
+int   amostraAnterior = 0;
 
 int   millisAtual, millisAnterior;
 int   millisTela;
 int   millisBotao;
 int   millisExpira;
 
+bool botaoApertado;
+
 File arquivoLog;
 char nomeBase[] = "BESR";
 char nomeConcat[12];
+String stringDados;
 
+HX711 celulaCarga;
+const int LOADCELL_DOUT_PIN = 2;
+const int LOADCELL_SCK_PIN = 3;
+const long LOADCELL_OFFSET = 50682624;
+const long LOADCELL_DIVIDER = 5895655;
+
+LiquidCrystal tela(TELA_RS, TELA_EN, TELA_D4, TELA_D5, TELA_D6, TELA_D7);
+
+bool debounceBotao();
+void medir();
+void escrever();
 
 void setup() {
-  LiquidCrystal tela(TELA_RS, TELA_EN, TELA_D4, TELA_D5, TELA_D6, TELA_D7);
-  tela.begin(16,2); 
+
+  //Setup do display e inicialização
+  
+  tela.begin(16,2);
+  
+  //Setup da célula de carga, sua inicialização é feita posteriormente
+  celulaCarga.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
+  celulaCarga.set_scale(LOADCELL_DIVIDER);
+  celulaCarga.set_offset(LOADCELL_OFFSET);
 }
 
 void loop() {
