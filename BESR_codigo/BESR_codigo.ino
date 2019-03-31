@@ -1,4 +1,6 @@
 #include <LiquidCrystal.h>
+#include <SPI.h>
+#include <SD.h>
 
 /*
   _____                                                        ______               _           _                
