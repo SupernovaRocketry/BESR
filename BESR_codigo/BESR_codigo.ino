@@ -1,6 +1,4 @@
-#include <LiquidCrystal.h>
-#include <SPI.h>
-#include <SD.h>
+
 
 /*
   _____                                                        ______               _           _                
@@ -45,7 +43,7 @@ SD_CS
 BOTAO_MEIO 
 
 
-//Não mexer
+//Variáveis do código, não mexer
 char  menu = 'e';
 char  submenu;
 
