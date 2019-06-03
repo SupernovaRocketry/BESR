@@ -41,6 +41,7 @@ Conexões:
 #define PINO_SD_CS   8 
 
 #define PINO_BOTAO 9
+#define TAMANHO_BUFFER 512
 
 
 //Variáveis do código, não mexer
@@ -346,19 +347,20 @@ bool debounceBotao(){
 
 void escrever(){
 
-  arquivoLog = SD.open(nomeConcat, FILE_WRITE);
-  
   stringDados += millisAtual;
   stringDados += ",";
   stringDados += peso;
   stringDados += ",";
   stringDados += maiorPeso;
-  arquivoLog.println(stringDados);
+  stringDados += "\n";
   
-  arquivoLog.close();
-}
+  if(sizeof(stringDados) == TAMANHO_BUFFER){
+  arquivoLog.print(stringDados);
+  arquivoLog.flush();
+  stringDados = "";
+  }
 
-
+  
 }
 
 void finaliza(){
