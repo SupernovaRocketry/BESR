@@ -359,3 +359,9 @@ void escrever(){
 }
 
 
+}
+
+void finaliza(){
+  arquivoLog.close();
+}
+}
