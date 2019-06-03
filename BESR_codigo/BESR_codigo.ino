@@ -76,6 +76,8 @@ LiquidCrystal tela(TELA_RS, TELA_EN, TELA_D4, TELA_D5, TELA_D6, TELA_D7);
 bool debounceBotao();
 void medir();
 void escrever();
+void finaliza();
+void espera();
 
 void setup() {
 
