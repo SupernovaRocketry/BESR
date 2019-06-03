@@ -308,6 +308,8 @@ void trabalhando(){
     tela.setCursor(1, 0);
     tela.print("      [OK]      ");
 
+    finaliza();
+
     if(debounceBotao)
     menu = 'e';
     
