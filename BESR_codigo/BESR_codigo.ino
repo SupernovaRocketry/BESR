@@ -38,7 +38,7 @@ const int TELA_D5 = 5;
 const int TELA_D6 = 6;
 const int TELA_D7 = 7;
 
-const int PINO_SD_CS = 10;
+const int PINO_SD_CS = 8;
 
 #define PINO_BOTAO A5
 #define TAMANHO_BUFFER 512
@@ -185,7 +185,7 @@ void inicializa(){
   celulaCarga.set_scale(LOADCELL_DIVIDER);
   celulaCarga.set_offset(LOADCELL_OFFSET);
   
-  if(!celulaCarga.wait_ready_timeout(500))
+  if(!celulaCarga.is_ready())
   submenu = 'c';
 
   if(submenu == 'a'){
@@ -345,8 +345,10 @@ void medir(){
 
 bool debounceBotao(){
 
-  if(digitalRead(PINO_BOTAO))
+  if(digitalRead(PINO_BOTAO)){
     botaoApertado = 1;
+    Serial.println("Pressionado");
+  }
 
   if((botaoApertado == 1) && (millisAtual - millisBotao > DEBOUNCE_MS)){
     return 1;
