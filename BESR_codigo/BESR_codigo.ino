@@ -80,14 +80,13 @@ void espera();
 
 void setup() {
 
+  
+
   //Setup do display e inicialização
   
   tela.begin(16,2);
+  Serial.begin(9600);
   
-  //Setup da célula de carga, sua inicialização é feita posteriormente
-  celulaCarga.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
-  celulaCarga.set_scale(LOADCELL_DIVIDER);
-  celulaCarga.set_offset(LOADCELL_OFFSET);
 }
 
 void loop() {
@@ -176,6 +175,11 @@ void inicializa(){
   }
   
   //inicializar o HX711
+  //Setup da célula de carga, sua inicialização é feita posteriormente
+  celulaCarga.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
+  celulaCarga.set_scale(LOADCELL_DIVIDER);
+  celulaCarga.set_offset(LOADCELL_OFFSET);
+  
   if(!celulaCarga.wait_ready_timeout(500))
   submenu = 'c';
 
@@ -368,5 +372,4 @@ void escrever(){
 
 void finaliza(){
   arquivoLog.close();
-}
 }
