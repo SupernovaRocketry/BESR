@@ -31,22 +31,21 @@ Conexões:
 #define PESO_ESTIMADO 250
 #define DELTA_RUIDO 1500
 
-#define TELA_RS 2
-#define TELA_EN 3
-#define TELA_D4 4
-#define TELA_D5 5
-#define TELA_D6 6
-#define TELA_D7 7
+const int TELA_RS = 2;
+const int TELA_EN = 3;
+const int TELA_D4 = 4;
+const int TELA_D5 = 5;
+const int TELA_D6 = 6;
+const int TELA_D7 = 7;
 
-#define PINO_SD_CS   8 
+const int PINO_SD_CS = 10;
 
-#define PINO_BOTAO 9
+#define PINO_BOTAO A5
 #define TAMANHO_BUFFER 512
 
-
 //Variáveis do código, não mexer
-char  menu = 'e';
-char  submenu;
+char  menu = 'i';
+char  submenu = 'a';
 
 int   peso = 0;
 int   maiorPeso = 0;
