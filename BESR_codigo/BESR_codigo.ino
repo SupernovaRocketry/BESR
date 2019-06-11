@@ -97,6 +97,11 @@ void loop() {
   
   if(millisAtual - millisAnterior > TAXA_ATUALIZ){
     
+      Serial.print("Menu: ");
+      Serial.print(menu);
+      Serial.print(" Submenu: ");
+      Serial.println(submenu);
+        
       switch (menu){
         case 'i':
         inicializa();
