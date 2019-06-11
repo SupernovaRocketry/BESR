@@ -66,8 +66,8 @@ char nomeConcat[12];
 String stringDados;
 
 HX711 celulaCarga;
-const int LOADCELL_DOUT_PIN = 2;
-const int LOADCELL_SCK_PIN = 3;
+const int LOADCELL_DOUT_PIN = A0;
+const int LOADCELL_SCK_PIN = A1;
 const long LOADCELL_OFFSET = 50682624;
 const long LOADCELL_DIVIDER = 5895655;
 
