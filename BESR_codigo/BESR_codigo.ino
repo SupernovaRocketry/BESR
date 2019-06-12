@@ -30,6 +30,7 @@ Conexões:
 #define CALIB_MS 5000
 #define PESO_ESTIMADO 250
 #define DELTA_RUIDO 1500
+#define DEBUG_SERIAL
 
 const int TELA_RS = 2;
 const int TELA_EN = 3;
@@ -82,13 +83,14 @@ void finaliza();
 void espera();
 
 void setup() {
-
-  
-
   //Setup do display e inicialização
+
   pinMode(PINO_BOTAO, INPUT);
   tela.begin(16,2);
+
+  #ifdef DEBUG_SERIAL 
   Serial.begin(115200);
+  #endif
   
 }
 
@@ -99,11 +101,13 @@ void loop() {
   //Loop principal do banco estático
   
   if(millisAtual - millisAnterior > TAXA_ATUALIZ){
-    
+      
+      #ifdef DEBUG_SERIAL 
       Serial.print("Menu: ");
       Serial.print(menu);
       Serial.print(" Submenu: ");
       Serial.println(submenu);
+      #endif
         
       switch (menu){
         case 'i':
