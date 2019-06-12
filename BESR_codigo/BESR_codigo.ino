@@ -54,11 +54,13 @@ int   amostraAnterior = 0;
 
 int   millisAtual, millisAnterior;
 int   millisTela;
-int   millisBotao;
 int   millisExpira;
 int   telaMudou = 0;
 
-bool botaoApertado;
+int estadoBotao;
+int ultimoEstadoBotao;
+unsigned long ultimoBotaoApertado = 0;
+unsigned long botaoApertado = 0;
 
 File arquivoLog;
 char nomeBase[] = "BESR";
@@ -73,7 +75,7 @@ const long LOADCELL_DIVIDER = 5895655;
 
 LiquidCrystal tela(TELA_RS, TELA_EN, TELA_D4, TELA_D5, TELA_D6, TELA_D7);
 
-bool debounceBotao();
+int debounceBotao();
 void medir();
 void escrever();
 void finaliza();
@@ -209,7 +211,7 @@ void calibra(){
     tela.setCursor(1, 0);
     tela.print("   [Calibrar]   ");
 
-    if(debounceBotao)
+    if(debounceBotao()){
     submenu = 'b';
     telaMudou = 1;
     }
@@ -222,7 +224,7 @@ void calibra(){
     tela.setCursor(1, 0);
     tela.print("      [OK]      ");
 
-    if(debounceBotao){
+    if(debounceBotao()){
     submenu = 'c';
     millisExpira = millisAtual;
     telaMudou = 1;
@@ -254,7 +256,7 @@ void calibra(){
     tela.setCursor(1, 0);
     tela.print("      [OK]      ");
 
-    if(debounceBotao){
+    if(debounceBotao()){
     submenu = 'a';
     menu = 'e';
     telaMudou = 1;
@@ -268,7 +270,7 @@ void calibra(){
     tela.setCursor(1, 0);
     tela.print("    [Voltar]    ");
 
-    if(debounceBotao)
+    if(debounceBotao()){
     submenu = 'a';
     telaMudou = 1;
     
@@ -286,7 +288,7 @@ void espera(){
   tela.setCursor(1, 0);
   tela.print("   [Iniciar]   ");
 
-  if(debounceBotao){
+  if(debounceBotao()){
     menu = 't';
     submenu = 'a';
     telaMudou = 1;
@@ -315,7 +317,7 @@ void trabalhando(){
     tela.setCursor(1, 0);
     tela.print("   [Terminar]   ");
 
-    if(debounceBotao)
+    if(debounceBotao()){
     submenu = 'b';
     telaMudou = 1;
     
@@ -331,7 +333,7 @@ void trabalhando(){
 
     finaliza();
 
-    if(debounceBotao)
+    if(debounceBotao()){
     menu = 'e';
     telaMudou = 1;
     
@@ -357,21 +359,22 @@ void medir(){
 
 }
 
-bool debounceBotao(){
+int debounceBotao(){
 
-  if(digitalRead(PINO_BOTAO)){
-    botaoApertado = 1;
-    Serial.println("Pressionado");
-  }
+if(digitalRead(PINO_BOTAO)){
+  botaoApertado = millis();
 
-  if((botaoApertado == 1) && (millisAtual - millisBotao > DEBOUNCE_MS)){
+  if((botaoApertado - ultimoBotaoApertado )> DEBOUNCE_MS){
+    ultimoBotaoApertado = botaoApertado;
     return 1;
-    botaoApertado = 0;
-
+   }
+  else{
+    return 0;
   }
-  else
+  }
   return 0;
 }
+
 
 void escrever(){
 
