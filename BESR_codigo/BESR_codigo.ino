@@ -88,7 +88,7 @@ void setup() {
   //Setup do display e inicialização
   pinMode(PINO_BOTAO, INPUT);
   tela.begin(16,2);
-  Serial.begin(9600);
+  Serial.begin(115200);
   
 }
 
