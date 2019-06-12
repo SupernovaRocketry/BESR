@@ -56,6 +56,7 @@ int   millisAtual, millisAnterior;
 int   millisTela;
 int   millisBotao;
 int   millisExpira;
+int   telaMudou = 0;
 
 bool botaoApertado;
 
@@ -126,8 +127,9 @@ void loop() {
 
 
   //Atualizando a tela caso passado o tempo definido
-  if(millisAtual - millisTela > TAXA_TELA){
+  if((millisAtual - millisTela > TAXA_TELA) && telaMudou ){
   tela.clear();
+  telaMudou = 0;
   millisTela = millisAtual;
   }
 }
@@ -187,10 +189,13 @@ void inicializa(){
   
   if(!celulaCarga.is_ready())
   submenu = 'c';
+  telaMudou = 1;
+  }
 
   if(submenu == 'a'){
   menu = 'c';
   submenu = 'a';
+  telaMudou = 1;
   }
 }
 
@@ -206,6 +211,8 @@ void calibra(){
 
     if(debounceBotao)
     submenu = 'b';
+    telaMudou = 1;
+    }
     
     break;
 
@@ -218,6 +225,7 @@ void calibra(){
     if(debounceBotao){
     submenu = 'c';
     millisExpira = millisAtual;
+    telaMudou = 1;
     }
     break;
 
@@ -234,6 +242,7 @@ void calibra(){
       submenu = 'd';
       else
       submenu = 'e';
+      telaMudou = 1;
         
     }
     
@@ -248,6 +257,7 @@ void calibra(){
     if(debounceBotao){
     submenu = 'a';
     menu = 'e';
+    telaMudou = 1;
     }
     
     break;
@@ -260,6 +270,7 @@ void calibra(){
 
     if(debounceBotao)
     submenu = 'a';
+    telaMudou = 1;
     
     break;
 
@@ -278,6 +289,7 @@ void espera(){
   if(debounceBotao){
     menu = 't';
     submenu = 'a';
+    telaMudou = 1;
   }
   
 }
@@ -305,6 +317,7 @@ void trabalhando(){
 
     if(debounceBotao)
     submenu = 'b';
+    telaMudou = 1;
     
     break;
 
@@ -320,6 +333,7 @@ void trabalhando(){
 
     if(debounceBotao)
     menu = 'e';
+    telaMudou = 1;
     
     break;
 
