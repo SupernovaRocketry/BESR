@@ -24,9 +24,9 @@ Conexões:
 #include "HX711.h" 
 
 //Configurações
-#define TAXA_ATUALIZ 100
+#define TAXA_ATUALIZ 50
 #define TAXA_TELA 100
-#define DEBOUNCE_MS 300
+#define DEBOUNCE_MS 500
 #define CALIB_MS 5000
 #define PESO_ESTIMADO 250
 #define DELTA_RUIDO 1500
