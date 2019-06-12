@@ -163,8 +163,10 @@ void inicializa(){
   }
 
   //inicializar o Cartão SD
-  if(!SD.begin(PINO_SD_CS))
+  if(!SD.begin(PINO_SD_CS)){
   submenu = 'b';
+  telaMudou = 1;
+  }
   else{
 
     int n = 1;
