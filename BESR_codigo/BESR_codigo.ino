@@ -208,7 +208,7 @@ void calibra(){
     case 'a':
     tela.setCursor(0, 0);
     tela.print("Calibrar o banco");
-    tela.setCursor(1, 0);
+    tela.setCursor(0, 1);
     tela.print("   [Calibrar]   ");
 
     if(debounceBotao()){
@@ -221,7 +221,7 @@ void calibra(){
     case 'b':
     tela.setCursor(0, 0);
     tela.print("Posicione o peso");
-    tela.setCursor(1, 0);
+    tela.setCursor(0, 1);
     tela.print("      [OK]      ");
 
     if(debounceBotao()){
@@ -235,16 +235,20 @@ void calibra(){
     medir();
     tela.setCursor(0, 0);
     tela.print("Valor atual:");
-    tela.setCursor(1, 0);
+    tela.setCursor(0, 1);
     tela.print(peso);
     
     if(millisAtual - millisExpira > CALIB_MS){
 
-      if(maiorPeso > PESO_ESTIMADO)
+      if(maiorPeso > PESO_ESTIMADO){
       submenu = 'd';
-      else
+      telaMudou = 1;
+      }
+
+      else{
       submenu = 'e';
       telaMudou = 1;
+      }
         
     }
     
@@ -253,7 +257,7 @@ void calibra(){
     case 'd':
     tela.setCursor(0, 0);
     tela.print("Calib. concluida");
-    tela.setCursor(1, 0);
+    tela.setCursor(0, 1);
     tela.print("      [OK]      ");
 
     if(debounceBotao()){
@@ -267,13 +271,14 @@ void calibra(){
     case 'e':
     tela.setCursor(0, 0);
     tela.print("Erro! Verif cabo");
-    tela.setCursor(1, 0);
+    tela.setCursor(0, 1);
     tela.print("    [Voltar]    ");
 
     if(debounceBotao()){
     submenu = 'a';
     telaMudou = 1;
-    
+    }
+
     break;
 
   }
@@ -285,7 +290,7 @@ void espera(){
 
   tela.setCursor(0, 0);
   tela.print("Pronto p/ medir");
-  tela.setCursor(1, 0);
+  tela.setCursor(0, 1);
   tela.print("   [Iniciar]   ");
 
   if(debounceBotao()){
@@ -307,28 +312,29 @@ void trabalhando(){
     tela.setCursor(0, 0);
     tela.print("A:      M:      ");
     
-    tela.setCursor(0, 3);
+    tela.setCursor(3, 0);
     tela.print(peso/100);
 
-    tela.setCursor(0, 12);
+    tela.setCursor(12, 0);
     tela.print(maiorPeso/100);
     
     
-    tela.setCursor(1, 0);
+    tela.setCursor(0, 1);
     tela.print("   [Terminar]   ");
 
     if(debounceBotao()){
     submenu = 'b';
     telaMudou = 1;
+    }
     
     break;
 
     case 'b':
     tela.setCursor(0, 0);
     tela.print("Salvo:");
-    tela.setCursor(0, 7);
+    tela.setCursor(7, 0);
     tela.print(nomeConcat);
-    tela.setCursor(1, 0);
+    tela.setCursor(0, 1);
     tela.print("      [OK]      ");
 
     finaliza();
@@ -336,6 +342,7 @@ void trabalhando(){
     if(debounceBotao()){
     menu = 'e';
     telaMudou = 1;
+    }
     
     break;
 
