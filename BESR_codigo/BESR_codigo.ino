@@ -198,7 +198,7 @@ void inicializa(){
 
   delay(HX_DELAY_INICIO);
   
-  if(!celulaCarga.is_ready()){
+  if(!celulaCarga.wait_ready_retry(20)){
   submenu = 'c';
   telaMudou = 1;
   }
