@@ -30,6 +30,7 @@ Conexões:
 #define CALIB_MS 5000
 #define PESO_ESTIMADO 250
 #define DELTA_RUIDO 1500
+#define HX_DELAY_INICIO 2000
 #define DEBUG_SERIAL
 
 const int TELA_RS = 2;
@@ -194,8 +195,10 @@ void inicializa(){
   celulaCarga.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
   celulaCarga.set_scale(LOADCELL_DIVIDER);
   celulaCarga.set_offset(LOADCELL_OFFSET);
+
+  delay(HX_DELAY_INICIO);
   
-  if(!celulaCarga.is_ready())
+  if(!celulaCarga.is_ready()){
   submenu = 'c';
   telaMudou = 1;
   }
