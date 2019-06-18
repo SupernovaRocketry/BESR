@@ -69,11 +69,10 @@ char nomeBase[] = "BESR";
 char nomeConcat[12];
 String stringDados;
 
-HX711 celulaCarga;
-const int LOADCELL_DOUT_PIN = A0;
-const int LOADCELL_SCK_PIN = A1;
-const long LOADCELL_OFFSET = 50682624;
-const long LOADCELL_DIVIDER = 5895655;
+const int   HX_DOUT = A0;
+const int   HX_CLK = A1;
+const float FATOR_CALIB = 2.00;
+HX711 celulaCarga(HX_DOUT, HX_CLK);
 
 LiquidCrystal tela(TELA_RS, TELA_EN, TELA_D4, TELA_D5, TELA_D6, TELA_D7);
 
