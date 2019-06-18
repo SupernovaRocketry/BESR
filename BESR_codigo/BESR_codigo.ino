@@ -31,7 +31,7 @@ Conexões:
 #define PESO_ESTIMADO 250
 #define DELTA_RUIDO 1500
 #define HX_DELAY_INICIO 2000
-#define DEBUG_SERIAL
+//#define DEBUG_SERIAL
 
 const int TELA_RS = 2;
 const int TELA_EN = 3;
@@ -51,8 +51,6 @@ char  submenu = 'a';
 
 int   peso = 0;
 int   maiorPeso = 0;
-int   amostraAtual = 0;
-int   amostraAnterior = 0;
 
 int   millisAtual, millisAnterior;
 int   millisTela;
