@@ -189,13 +189,13 @@ void inicializa(){
   
   //inicializar o HX711
   //Setup da célula de carga, sua inicialização é feita posteriormente
-  celulaCarga.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
-  celulaCarga.set_scale(LOADCELL_DIVIDER);
-  celulaCarga.set_offset(LOADCELL_OFFSET);
-
-  delay(HX_DELAY_INICIO);
   
-  if(!celulaCarga.wait_ready_retry(20)){
+  delay(HX_DELAY_INICIO);
+  celulaCarga.set_scale(FATOR_CALIB);
+  float zero = celulaCarga.get_units(100);
+  celulaCarga.tare(zero);
+
+  if(!celulaCarga.is_ready()){
   submenu = 'c';
   telaMudou = 1;
   }
