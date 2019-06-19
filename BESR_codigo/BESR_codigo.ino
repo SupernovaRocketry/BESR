@@ -319,10 +319,10 @@ void trabalhando(){
     tela.print("A:      M:      ");
     
     tela.setCursor(3, 0);
-    tela.print(peso/100);
+    tela.print(peso/1000);
 
     tela.setCursor(12, 0);
-    tela.print(maiorPeso/100);
+    tela.print(maiorPeso/1000);
     
     
     tela.setCursor(0, 1);
