@@ -388,18 +388,22 @@ if(digitalRead(PINO_BOTAO)){
 
 void escrever(){
 
+  stringDados = "";
   stringDados += millisAtual;
   stringDados += ",";
   stringDados += peso;
   stringDados += ",";
   stringDados += maiorPeso;
-  stringDados += "\n";
+  arquivoLog.println(stringDados);
+  arquivoLog.flush();
+
+  //stringDados += "\n";
   
-  if(sizeof(stringDados) == TAMANHO_BUFFER){
+  /* if(sizeof(stringDados) == TAMANHO_BUFFER){
   arquivoLog.print(stringDados);
   arquivoLog.flush();
   stringDados = "";
-  }
+  } */
 
   
 }
