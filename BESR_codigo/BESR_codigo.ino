@@ -28,7 +28,7 @@ Conexões:
 #define TAXA_TELA 100
 #define DEBOUNCE_MS 500
 #define CALIB_MS 5000
-#define PESO_ESTIMADO 250
+#define PESO_ESTIMADO 250.0
 #define DELTA_RUIDO 1500
 #define HX_DELAY_INICIO 2000
 //#define DEBUG_SERIAL
@@ -49,8 +49,8 @@ const int PINO_SD_CS = 8;
 char  menu = 'i';
 char  submenu = 'a';
 
-int   peso = 0;
-int   maiorPeso = 0;
+float   peso = 0;
+float   maiorPeso = 0;
 
 int   millisAtual, millisAnterior;
 int   millisTela;
