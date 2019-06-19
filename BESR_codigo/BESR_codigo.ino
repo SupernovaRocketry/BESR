@@ -358,17 +358,14 @@ void trabalhando(){
 
 void medir(){
 
-    amostraAtual = celulaCarga.get_units(10);
+    peso = celulaCarga.get_units();
 
-    if(abs(amostraAnterior - amostraAtual) > DELTA_RUIDO){
-      
-    peso = amostraAtual;
-    
-    if(peso > maiorPeso)
+    if (peso < 0.00)
+      peso = 0.00;
+  
+
+    if (peso > maiorPeso)
     maiorPeso = peso;
-
-    amostraAnterior = amostraAtual;
-    }
 
 }
 
