@@ -195,7 +195,7 @@ void inicializa(){
   float zero = celulaCarga.get_units(100);
   celulaCarga.tare(zero);
 
-  if(!celulaCarga.is_ready()){
+  if(celulaCarga.is_ready()){
   submenu = 'c';
   telaMudou = 1;
   }
